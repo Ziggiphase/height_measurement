@@ -48,8 +48,10 @@ def estimate_heights_from_image(image, ref_index, ref_height):
         color = (0, 255, 0) if idx == ref_index else (255, 0, 0)
         label = f"Ref: {estimated_height:.2f}m" if idx == ref_index else f"{estimated_height:.2f}m"
 
+        # Adjust label position to avoid cutting off
+        label_position = (x1, max(y1 - 10, 10))  # Make sure label doesn't go off the image
         cv2.rectangle(annotated, (x1, y1), (x2, y2), color, 2)
-        cv2.putText(annotated, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+        cv2.putText(annotated, label, label_position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
 
     return cv2.cvtColor(annotated, cv2.COLOR_BGR2RGB)
 
@@ -95,8 +97,10 @@ def estimate_heights_from_video(video_path, ref_index, ref_height):
             color = (0, 255, 0) if idx == ref_index else (255, 0, 0)
             label = f"Ref: {estimated_height:.2f}m" if idx == ref_index else f"{estimated_height:.2f}m"
 
+            # Adjust label position to avoid cutting off
+            label_position = (x1, max(y1 - 10, 10))  # Make sure label doesn't go off the image
             cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
-            cv2.putText(frame, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+            cv2.putText(frame, label, label_position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
 
         out.write(frame)
 
